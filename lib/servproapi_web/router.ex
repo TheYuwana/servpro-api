@@ -9,7 +9,12 @@ defmodule ServproapiWeb.Router do
     pipe_through :api
 
     scope "/account" do
+      get "/user/:name", AccountController, :get_user
       post "/register", AccountController, :register
+    end
+
+    scope "/request" do
+      get "/list", ServiceController, :list
     end
 
   end

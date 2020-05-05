@@ -8,6 +8,28 @@ defmodule ServproapiWeb.AccountView do
             data: data
         }
     end
+
+    def render("user.json", %{user: user}) do
+
+        skills = Enum.map(user.skills, fn user_skill -> 
+            %{
+                name: user_skill.skill.name,
+                scale: user_skill.scale
+            }
+        end)
+
+        %{
+            message: "Sucess!",
+            meta: nil,
+            data: %{
+                id: user.id,
+                name: user.name,
+                age: user.age,
+                picture: user.picture,
+                skills: skills
+            }
+        }
+    end
     
   end
   

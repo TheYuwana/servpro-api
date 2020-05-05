@@ -15,8 +15,32 @@ defmodule Servproapi.Account do
         |> Repo.insert
     end
 
+    def create_user_with_skills(user_attrs, skills) do
+        multi = Ecto.Multi.new()
+        |> Ecto.Multi.insert("user", User.changeset(%User{}, user_attrs))
+
+        Enum.reduce(skills, multi, fn skill, multi -> 
+            Ecto.Multi.run(multi, "skill_#{skill["name"]}", fn repo, changes ->
+                case get_skill_by_name(skill["name"]) do
+                    {:ok, found_skill} ->
+                        %UserSkill{}
+                        |> UserSkill.changeset(changes["user"], found_skill, %{scale: skill["scale"]})
+                        |> repo.insert()
+
+                    nil ->
+                        {:error, [%{field: "skills", error: "#{skill["name"]} not found"}]}
+                end
+            end)
+        end)
+        |> Repo.transaction()
+    end
+
     def get_user_by_name(name) do
-        case Repo.get_by(User, [name: name]) do
+        result = User
+        |> User.with_skills
+        |> Repo.get_by([name: name])
+
+        case result do
             nil -> {:error, :not_found}
             user -> {:ok, user}
         end

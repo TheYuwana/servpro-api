@@ -6,7 +6,9 @@ defmodule Servproapi.Service do
     # Request
     ####################
     def list_requests() do
-        Repo.all(Request)
+        Request
+        |> Request.with_skill
+        |> Repo.all()
     end
 
     def create_request(attrs \\ %{}, user, skill) do

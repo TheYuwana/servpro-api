@@ -10,8 +10,9 @@ defmodule ServproapiWeb.FallbackController do
     end
 
     # Changeset errors
-    def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
-        
+    def call(conn, {:error, _multi_field, %Ecto.Changeset{} = changeset, _data}), do: show_changeset_error(conn, changeset)
+    def call(conn, {:error, %Ecto.Changeset{} = changeset}), do: show_changeset_error(conn, changeset)
+    def show_changeset_error(conn, changeset) do
         errors = Enum.map(changeset.errors, fn {field, {msg, _constraints}} -> 
             %{
                 field: field,
@@ -19,6 +20,14 @@ defmodule ServproapiWeb.FallbackController do
             }
         end)
         
+        conn
+        |> put_status(400)
+        |> put_view(ServproapiWeb.ErrorView)
+        |> render("400.json", %{data: errors})
+    end
+
+    # Custom errors
+    def call(conn, {:error, _multi_field, errors, _data}) do
         conn
         |> put_status(400)
         |> put_view(ServproapiWeb.ErrorView)

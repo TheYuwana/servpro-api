@@ -3,7 +3,7 @@ defmodule Servproapi.Service.Request do
     import Ecto.Changeset
     alias Servproapi.Account.{Skill, User}
     alias Servproapi.Service.{Request}
-    # import Ecto.Query
+    import Ecto.Query
   
     schema "requests" do
       field :client, :string
@@ -27,6 +27,14 @@ defmodule Servproapi.Service.Request do
       |> put_assoc(:accepted_user, accepted_user)
       |> put_assoc(:skill, skill)
     end
+
+    def with_skill(request) do
+        skill_query = 
+          from sk in Skill
+  
+        from r in request,
+        preload: [skill: ^skill_query]
+      end
 
   end
   
