@@ -4,8 +4,8 @@ use Mix.Config
 config :servproapi, Servproapi.Repo,
   username: "postgres",
   password: "postgres",
-  database: "servproapi_dev",
-  hostname: "localhost",
+  database: "servpro_db",
+  hostname: "servpro_db",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 

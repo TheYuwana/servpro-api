@@ -7,5 +7,10 @@ defmodule ServproapiWeb.Router do
 
   scope "/api", ServproapiWeb do
     pipe_through :api
+
+    scope "/account" do
+      post "/register", AccountController, :register
+    end
+
   end
 end

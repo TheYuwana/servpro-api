@@ -28,3 +28,4 @@ servproapi-*.tar
 /priv/static/
 
 /.DS_Store
+/.ash_history
