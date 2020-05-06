@@ -84,6 +84,13 @@ defmodule Servproapi.Account do
         Repo.all(UserSkill)
     end
 
+    def list_user_skills_requests(user_id) do
+        UserSkill
+        |> UserSkill.by_user(user_id)
+        |> UserSkill.with_skill_and_requests
+        |> Repo.all()
+    end
+
     def create_user_skill(scale, user, skill) do
         %UserSkill{}
         |> UserSkill.changeset(user, skill, %{scale: scale})

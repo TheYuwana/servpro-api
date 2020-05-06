@@ -8,6 +8,7 @@ defmodule Servproapi.Service do
     def list_requests() do
         Request
         |> Request.with_skill
+        |> Request.sort_by_start_date
         |> Repo.all()
     end
 
@@ -18,8 +19,9 @@ defmodule Servproapi.Service do
     end
 
     def accept_request(request, user_id) do
+        new_user_id = if request.user_id != user_id do user_id else 1 end
         request
-        |> Request.changeset_accept(%{user_id: user_id})
+        |> Request.changeset_accept(%{user_id: new_user_id})
         |> Repo.update
     end
 

@@ -34,12 +34,17 @@ defmodule Servproapi.Service.Request do
     end
 
     def with_skill(request) do
-        skill_query = 
-          from sk in Skill
-  
-        from r in request,
-        preload: [skill: ^skill_query]
-      end
+      skill_query = 
+        from sk in Skill
+
+      from r in request,
+      preload: [skill: ^skill_query]
+    end
+
+    def sort_by_start_date(request) do
+      from r in request,
+      order_by: [{:desc, r.start_date}, {:desc, r.client}]
+    end
 
   end
   

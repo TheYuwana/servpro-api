@@ -20,13 +20,14 @@ defmodule ServproapiWeb.ServiceView do
 
     def render("request.json", %{service: request}) do
         %{
+            id: request.id,
             client: request.client,
             subject: request.subject,
             details: request.details,
             start_date: request.start_date,
             end_date: request.end_date,
             skill: request.skill.name,
-            user: request.accepted_user_id
+            user: request.user_id
         }
     end
     

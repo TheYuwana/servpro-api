@@ -5,7 +5,7 @@ defmodule Servproapi.Account.User do
     alias Servproapi.Service.{Request}
     import Ecto.Query
 
-    def avatars, do: ["avatar-1", "avatar-2", "avatar-3", "avatar-4"]
+    def avatars, do: ["avatar-1", "avatar-2", "avatar-3", "avatar-4", "avatar-5"]
 
     schema "users" do
       field :name, :string

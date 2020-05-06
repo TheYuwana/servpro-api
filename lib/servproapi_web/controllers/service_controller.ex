@@ -5,6 +5,24 @@ defmodule ServproapiWeb.ServiceController do
 
     action_fallback ServproapiWeb.FallbackController
 
+    # Requests based on user skills
+    def list(conn, %{"user_id" => user_id}) do
+        with(
+            {:ok, user} <- Account.get_user_by_id(user_id),
+            skill_requests <- Account.list_user_skills_requests(user.id)
+        ) do
+
+            requests = Enum.map(skill_requests, fn sr -> 
+                sr.skill.requests
+            end)
+            |> List.flatten
+
+            conn
+            |> put_status(200)
+            |> render("list.json", %{requests: requests})
+        end
+    end
+
     def list(conn, _params) do
         with(
             requests <- Service.list_requests()
@@ -15,15 +33,12 @@ defmodule ServproapiWeb.ServiceController do
         end
     end
 
-    def update_request(conn, %{"request_id" => request_id, "user_id" => user_id, "accepted" => accepted}) do
-        
-        accepted_id = if accepted == "yes" do user_id else 1 end
-
+    def update_request(conn, %{"request_id" => request_id, "user_id" => user_id}) do
         with(
             {:ok, user} <- Account.get_user_by_id(user_id),
             {:ok, request} <- Service.get_request_by_id(request_id),
             :ok <- check_conflicting_requests(request, user),
-            {:ok, _updated_request} <- Service.accept_request(request, accepted_id)
+            {:ok, _updated_request} <- Service.accept_request(request, user.id)
         ) do
             conn
             |> put_status(200)
