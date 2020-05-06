@@ -22,9 +22,9 @@ defmodule Servproapi.Account.User do
     def changeset(%User{} = user, attrs) do
       user
       |> cast(attrs, [:name, :age, :picture])
-      |> validate_required([:name, :age, :picture], [message: "CANNOT_BE_EMPTY"])
+      |> validate_required([:name, :age], [message: "CANNOT_BE_EMPTY"])
       |> unique_constraint(:name, [message: "NAME_TAKEN"])
-      |> validate_inclusion(:picture, avatars(), [message: "INVALID_AVATAR"])
+      |> validate_inclusion(:picture, avatars(), message: "INVALID_PICTURE")
     end
 
     def with_skills(user) do

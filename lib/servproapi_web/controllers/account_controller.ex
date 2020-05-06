@@ -6,16 +6,24 @@ defmodule ServproapiWeb.AccountController do
 
     def register(conn, %{"user" => user, "skills" => skills}) do
         with(
+            :ok <- skill_count(skills),
             {:ok, user} <- Account.create_user_with_skills(user, skills)
         ) do
             conn
             |> put_status(201)
             |> render("201.json", 
             %{  
-                data: %{
-                    name: user.name
-                }
+                data: nil
             })
+        end
+    end
+
+    defp skill_count(skills) do
+        case Enum.count(skills) do
+            0 ->
+                {:error, "Skills", [%{field: "skills", error: "NO_SKILL_SELECTED"}], %{}}
+            _ -> 
+                :ok
         end
     end
 
@@ -26,6 +34,16 @@ defmodule ServproapiWeb.AccountController do
             conn
             |> put_status(201)
             |> render("user.json", %{user: user})
+        end
+    end
+
+    def list_skills(conn, _params) do
+        with(
+            skills <- Account.list_skills()
+        ) do
+            conn
+            |> put_status(200)
+            |> render("list_skills.json", %{skills: skills})
         end
     end
 
