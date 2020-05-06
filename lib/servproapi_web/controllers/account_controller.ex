@@ -19,11 +19,10 @@ defmodule ServproapiWeb.AccountController do
     end
 
     defp skill_count(skills) do
-        case Enum.count(skills) do
-            0 ->
-                {:error, "Skills", [%{field: "skills", error: "NO_SKILL_SELECTED"}], %{}}
-            _ -> 
-                :ok
+        if Enum.count(skills) < 3 do 
+            {:error, "Skills", [%{field: "skills", error: "NO_SKILL_SELECTED"}], %{}}
+        else
+            :ok
         end
     end
 

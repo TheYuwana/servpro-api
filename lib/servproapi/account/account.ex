@@ -46,6 +46,17 @@ defmodule Servproapi.Account do
         end
     end
 
+    def get_user_by_id(id) do
+        result = User
+        |> User.with_requests()
+        |> Repo.get_by([id: id])
+
+        case result do
+            nil -> {:error, :not_found}
+            user -> {:ok, user}
+        end
+    end
+
     ####################
     # Skill
     ####################

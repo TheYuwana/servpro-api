@@ -5,8 +5,8 @@ defmodule Servproapi.Account.User do
     alias Servproapi.Service.{Request}
     import Ecto.Query
 
-    def avatars, do: ["avatar_1", "avatar_2", "avatar_3", "avatar_4"]
-  
+    def avatars, do: ["avatar-1", "avatar-2", "avatar-3", "avatar-4"]
+
     schema "users" do
       field :name, :string
       field :age, :integer
@@ -37,6 +37,14 @@ defmodule Servproapi.Account.User do
 
       from u in user,
       preload: [skills: ^userskill_query]
+    end
+
+    def with_requests(user) do
+      request_query = 
+        from r in Request
+
+      from u in user,
+      preload: [accepted_requests: ^request_query]
     end
 
   end

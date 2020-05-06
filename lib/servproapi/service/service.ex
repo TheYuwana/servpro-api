@@ -17,5 +17,18 @@ defmodule Servproapi.Service do
         |> Repo.insert
     end
 
+    def accept_request(request, user_id) do
+        request
+        |> Request.changeset_accept(%{user_id: user_id})
+        |> Repo.update
+    end
+
+    def get_request_by_id(id) do
+        case Repo.get_by(Request, [id: id]) do
+            nil -> {:error, :not_found}
+            request -> {:ok, request}
+        end
+    end
+
   end
   

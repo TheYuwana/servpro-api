@@ -11,7 +11,7 @@ defmodule Servproapi.Repo.Migrations.CreateRequests do
       add(:end_date, :utc_datetime)
 
       add :skill_id, references("skills")
-      add :accepted_user_id, references("users")
+      add :user_id, references("users")
       timestamps()
     end
   end

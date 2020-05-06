@@ -2,6 +2,14 @@ defmodule ServproapiWeb.ServiceView do
     use ServproapiWeb, :view
     alias ServproapiWeb.ServiceView
 
+    def render("200.json", %{data: data}) do
+        %{
+            message: "Sucess!",
+            meta: nil,
+            data: nil
+        }
+    end
+
     def render("list.json", %{requests: requests}) do
         %{
             message: "Sucess!",

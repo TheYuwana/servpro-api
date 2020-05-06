@@ -16,6 +16,7 @@ defmodule ServproapiWeb.Router do
 
     scope "/request" do
       get "/list", ServiceController, :list
+      put "/accept", ServiceController, :update_request
     end
 
   end
