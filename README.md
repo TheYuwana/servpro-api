@@ -1,19 +1,34 @@
-# Servproapi
+# ServPro API
 
-To start your Phoenix server:
+## Start the docker container in the root
+```
+docker-compose up
+```
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server`
+## List docker containers
+```
+docker ps -a
+```
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+## Grab the container ID and enter the container with bas
+```
+docker exec -it {container id} bash
+```
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## In the container, Create database and tables
+```
+mix ecto.setup
+```
 
-## Learn more
+## In the container, seed the database
+```
+mix run priv/repo/seeds.exs
+```
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+## And your good to go!
+```
+http://localhost:4000
+```
+
+## Top it off with a client website!
+https://github.com/TheYuwana/servpro-web
