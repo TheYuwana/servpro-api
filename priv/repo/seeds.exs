@@ -15,8 +15,8 @@ IO.puts("========================")
 case Account.list_users() do
     [] -> 
         users = [
-            %{name: "admin", picture: "avatar_1", age: 99},
-            %{name: "Jonathan", picture: "avatar_2", age: 99}
+            %{name: "admin", picture: "avatar-1", age: 99},
+            %{name: "Jonathan", picture: "avatar-2", age: 99}
         ]
 
         Enum.each(users, fn user -> 

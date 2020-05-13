@@ -26,6 +26,21 @@ defmodule ServproapiWeb.AccountController do
         end
     end
 
+    def update_skills(conn, %{"skills" => skills, "user_id" => user_id}) do
+        with(
+            :ok <- skill_count(skills),
+            {:ok, user} <- Account.get_user_by_id(user_id),
+            {:ok, _updated_skills} <- Account.update_user_skills(user, skills)
+        ) do
+            conn
+            |> put_status(201)
+            |> render("201.json", 
+            %{  
+                data: nil
+            })
+        end
+    end
+
     def get_user(conn, %{"name" => name}) do
         with(
             {:ok, user} <- Account.get_user_by_name(name)

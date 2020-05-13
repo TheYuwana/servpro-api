@@ -12,6 +12,7 @@ defmodule ServproapiWeb.Router do
       get "/user/:name", AccountController, :get_user
       post "/register", AccountController, :register
       get "/list-skills", AccountController, :list_skills
+      put "/skills", AccountController, :update_skills
     end
 
     scope "/request" do

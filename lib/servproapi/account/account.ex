@@ -49,6 +49,7 @@ defmodule Servproapi.Account do
     def get_user_by_id(id) do
         result = User
         |> User.with_requests()
+        |> User.with_skills()
         |> Repo.get_by([id: id])
 
         case result do
@@ -95,6 +96,20 @@ defmodule Servproapi.Account do
         %UserSkill{}
         |> UserSkill.changeset(user, skill, %{scale: scale})
         |> Repo.insert
+    end
+
+    def update_user_skills(user, skills) do
+        
+        # IO.puts "===================================="
+        # IO.inspect user.skills
+
+        # Enum.each(user.skills, fn skill -> 
+        #     Repo.
+        # end)
+
+
+        {:ok, nil}
+
     end
 
   end
